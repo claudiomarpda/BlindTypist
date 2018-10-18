@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.blind.typist.dictionary.WordClassification.DOT;
 import static com.blind.typist.dictionary.WordClassification.UNDEFINED;
 
 public class LexicalAnalyzer implements LexicalAnalysis {
@@ -21,7 +22,7 @@ public class LexicalAnalyzer implements LexicalAnalysis {
     }
 
     @Override
-    public void process(List<String> words) {
+    public void analyze(List<String> words) {
         List<String> results = new ArrayList<>();
 
         words.forEach(c -> {
@@ -33,9 +34,11 @@ public class LexicalAnalyzer implements LexicalAnalysis {
 
                     System.out.println(token);
 
-                } catch (IOException e) {
+                } catch (RuntimeException | IOException e) {
                     results.add("Invalid word '" + c + "'");
                 }
+            } else {
+                tokens.add(new Token(".", DOT));
             }
         });
         results.forEach(System.out::println);

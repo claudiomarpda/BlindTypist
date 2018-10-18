@@ -12,7 +12,8 @@ public enum WordClassification {
     ADJ("adj."),
     PREP("prep."),
     ADJ_F("adj. f."),
-    UNDEFINED("UNDEFINED");
+    UNDEFINED("UNDEFINED"),
+    DOT("dot");
 
     private String name;
 

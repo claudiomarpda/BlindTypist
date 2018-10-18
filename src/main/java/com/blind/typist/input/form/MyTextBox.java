@@ -13,8 +13,8 @@ public class MyTextBox {
         textArea.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent keyEvent) {
-                if(keyEvent.getKeyChar() == '\n') {
-                    textObserver.notify(textArea.getText());
+                if(keyEvent.getKeyChar() == '.') {
+                    textObserver.notify(textArea.getText() + " .");
                 }
             }
         });
