@@ -19,22 +19,24 @@ public class SentenceObserver implements TextObserver {
 
         String[] sentences = text.split("\n");
 
-        for (int i = 0; i < sentences.length; i++) {
+        for (String sentence : sentences) {
 
-            String[] words = sentences[i].split(" ");
+            String[] words = sentence.split(" ");
             List<String> wordList = new ArrayList<>(Arrays.asList(words));
 
-            // Last word must be a dot: .
-            // Get last word
-            String last = wordList.remove(wordList.size() - 1);
+            if(wordList.get(wordList.size() -1).equals(".")) {
+                // Last word must be a dot: .
+                // Get last word
+                String last = wordList.remove(wordList.size() - 1);
 
-            // Separate word from dot: word .
-            String w = last.substring(0, last.length() - 1);
-            String dot = last.substring(last.length() - 1);
+                // Separate word from dot: word .
+                String w = last.substring(0, last.length() - 1);
+                String dot = last.substring(last.length() - 1);
 
-            // Add to list
-            wordList.add(w);
-            wordList.add(dot);
+                // Add both to list
+                wordList.add(w);
+                wordList.add(dot);
+            }
 
             // Analyze sentence
             lexicalAnalysis.process(wordList);
