@@ -24,8 +24,11 @@ public class SentenceObserver implements TextObserver {
             String[] words = sentence.split(" ");
             List<String> wordList = new ArrayList<>(Arrays.asList(words));
 
-            if(wordList.get(wordList.size() -1).equals(".")) {
-                // Last word must be a dot: .
+            // Last character must be a dot: .
+            String lastWord= wordList.get(wordList.size() -1);
+            char lastChar = lastWord.charAt(lastWord.length() - 1);
+
+            if(lastChar == '.') {
                 // Get last word
                 String last = wordList.remove(wordList.size() - 1);
 
