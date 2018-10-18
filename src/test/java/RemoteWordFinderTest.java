@@ -7,35 +7,37 @@ import static com.blind.typist.dictionary.WordClassification.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class WordFinderTest {
+public class RemoteWordFinderTest {
+
+    private RemoteWordFinder finder = new RemoteWordFinder();
 
     @Test
     public void go() throws IOException {
-        String s = RemoteWordFinder.findClass("nome");
+        String s = finder.findClass("nome");
         assertEquals(s, SUBS_MASC.toString());
 
-        s = RemoteWordFinder.findClass("casa");
+        s = finder.findClass("casa");
         assertEquals(s, SUBS_FEM.toString());
 
-        s = RemoteWordFinder.findClass("lar");
+        s = finder.findClass("lar");
         assertEquals(s, SUBS_MASC.toString());
 
-        s = RemoteWordFinder.findClass("carro");
+        s = finder.findClass("carro");
         assertEquals(s, SUBS_MASC.toString());
 
-        s = RemoteWordFinder.findClass("andar");
+        s = finder.findClass("andar");
         assertTrue(s.startsWith(VERB.toString()));
 
-        s = RemoteWordFinder.findClass("bela");
+        s = finder.findClass("bela");
         assertEquals(s, SUBS_FEM.toString());
 
-        s = RemoteWordFinder.findClass("os");
+        s = finder.findClass("os");
         assertEquals(s, ART_D.toString());
 
-        s = RemoteWordFinder.findClass("forte");
+        s = finder.findClass("forte");
         assertEquals(s, ADJ.toString());
 
-        s = RemoteWordFinder.findClass("entre");
+        s = finder.findClass("entre");
         assertEquals(s, PREP.toString());
     }
 }
