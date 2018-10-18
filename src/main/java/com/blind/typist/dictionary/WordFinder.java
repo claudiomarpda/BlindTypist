@@ -1,4 +1,4 @@
-package com.blind.typist;
+package com.blind.typist.dictionary;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package com.blind.typist;
+package com.blind.typist.dictionary;
 
 public enum WordClassification {
 
