@@ -8,10 +8,11 @@ public enum WordClassification {
     SUBS_FEM("f."),
     VERB("v."),
     VERB_T("v. t."),
-    VERB_I("v. i,"),
+    VERB_I("v. i."),
     ADJ("adj."),
     PREP("prep."),
-    ADJ_F("adj. f.");
+    ADJ_F("adj. f."),
+    UNDEFINED("UNDEFINED");
 
     private String name;
 
