@@ -32,24 +32,13 @@ public class SyntacticAnalyzer implements SyntacticAnalysis {
         checkTexto();
         result.forEach(System.out::println);
 
-        clear();
         System.out.println("\nSyntactic analysis end\n");
-    }
-
-    private void clear() {
-        tokens.clear();
-        current = 0;
-        result.clear();
     }
 
     private void goToNextToken() {
         if (++current < tokens.size()) {
             token = tokens.get(current);
         }
-    }
-
-    private boolean classMatches(Classification classification) {
-        return token.getWord().getClassification().equals(classification.toString());
     }
 
     /**
@@ -77,11 +66,12 @@ public class SyntacticAnalyzer implements SyntacticAnalysis {
      */
     private void checkSintagmaNominal() {
         if (artigoMatches()) {
+            goToNextToken();
             if (!substantivoMatches()) {
-                result.add("Substantivo esperado em '" + getName() + "'");
+                result.add("Substantivo esperado depois de '" + getName() + "'");
             }
         } else if (!substantivoMatches()) {
-            result.add("Substantivo esperado em '" + getName() + "'");
+            result.add("Substantivo esperado depois de '" + getName() + "'");
         }
 
         goToNextToken();
@@ -100,27 +90,28 @@ public class SyntacticAnalyzer implements SyntacticAnalysis {
 
         } else {
             result.add("Verbo esperado em '" + getName() + "'");
+            goToNextToken();
         }
     }
 
     private boolean substantivoMatches() {
-        return classificationMatches(SUBS) ||
-                classificationMatches(SUBS_MASC) ||
-                classificationMatches(SUBS_FEM);
+        return classMatches(SUBS) ||
+                classMatches(SUBS_MASC) ||
+                classMatches(SUBS_FEM);
     }
 
     private boolean artigoMatches() {
-        return token.getWord().getClassification().equals(ART_D.toString());
+        return classMatches(ART_D) || classMatches(ART_I);
     }
 
     private boolean verboMatches() {
-        return classificationMatches(VERB) ||
-                classificationMatches(VERB_T) ||
-                classificationMatches(VERB_I);
+        return classMatches(VERB) ||
+                classMatches(VERB_T) ||
+                classMatches(VERB_I);
     }
 
-    private boolean classificationMatches(Classification classification) {
-        return classification.toString().equals(token.getWord().getClassification());
+    private boolean classMatches(Classification classification) {
+        return token.getWord().getClassification().equals(classification.toString());
     }
 
     private String getName() {
@@ -135,16 +126,16 @@ public class SyntacticAnalyzer implements SyntacticAnalysis {
             if (!current.getGender().equals("") && !next.getGender().equals("")) {
                 if (!current.getGender().equals(next.getGender())) {
                     result.add("Incompatibilidade." +
-                            "\nEsperado " + current.getGender() + " por " + current.getName() +
-                            "\nRecebido " + next.getGender() + " de " + next.getName());
+                            "\nEsperado " + current.getGender() + " por '" + current.getName() + "'" +
+                            "\nRecebido " + next.getGender() + " de '" + next.getName() + "'");
                 }
             }
 
             if (!current.getSingularPlural().equals("") && !next.getSingularPlural().equals("")) {
                 if (!current.getSingularPlural().equals(next.getSingularPlural())) {
                     result.add("Incompatibilidade." +
-                            "\nEsperado " + current.getSingularPlural() + " por " + current.getName() +
-                            "\nRecebido " + next.getSingularPlural() + " de " + next.getName());
+                            "\nEsperado " + current.getSingularPlural() + " por '" + current.getName() + "'" +
+                            "\nRecebido " + next.getSingularPlural() + " de '" + next.getName() + "'");
                 }
             }
         }
