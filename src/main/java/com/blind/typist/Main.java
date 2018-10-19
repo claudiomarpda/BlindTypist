@@ -15,10 +15,10 @@ import java.util.Set;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        final Set<Word> words = FileUtil.readAll();
-        words.forEach(System.out::println);
+        final Set<Word> dictionary = FileUtil.readAll();
+        dictionary.forEach(System.out::println);
 
-        LexicalAnalysis la = new LexicalAnalyzer(new LocalWordFinder(words));
+        LexicalAnalysis la = new LexicalAnalyzer(new LocalWordFinder(dictionary));
         TextObserver textObserver = new SentenceObserver(la);
 
         new MyTextBox(textObserver);

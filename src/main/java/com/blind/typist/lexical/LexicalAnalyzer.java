@@ -16,38 +16,63 @@ public class LexicalAnalyzer implements LexicalAnalysis {
     private List<Token> tokens;
 
     public LexicalAnalyzer(WordFinder wf) {
-        this.wordFinder = wf;
+        wordFinder = wf;
         tokens = new ArrayList<>();
     }
 
     @Override
     public void analyze(List<String> words) {
-        System.out.println("----------------");
-        System.out.println("\nLexical analysis\n");
+        System.out.println("\nLexical analysis start\n");
 
         List<String> results = new ArrayList<>();
 
         words.forEach(c -> {
-            if (!c.equals(".")) {
-                try {
-                    Word result = wordFinder.findWord(c);
-                    Token token = new Token(result);
-                    tokens.add(token);
+            try {
+                c = c.trim();
+                checkWord(c);
 
-                    System.out.println(token);
-
-                } catch (RuntimeException | IOException e) {
-                    results.add(e.getMessage());
-                }
-            } else {
-                Word w = new Word(".", DOT.toString(), "", "");
-                tokens.add(new Token(w));
+            } catch (RuntimeException | IOException e) {
+                results.add(e.getMessage());
             }
         });
         results.forEach(System.out::println);
         results.clear();
 
+        System.out.println("\nLexical analysis end\n");
+
         new SyntacticAnalyzer(tokens).analyze();
+    }
+
+    private void checkWord(String name) throws IOException {
+        if(name.equals(".")) {
+            Word w = new Word(".", DOT.toString());
+            tokens.add(new Token(w));
+            return;
+        }
+
+        char firstChar = name.charAt(0);
+        char lastChar = name.charAt(name.length() - 1);
+        boolean dotAtLastChar = false;
+
+        // If first or last character is a dot (.)
+        if (firstChar == '.') {
+            name = name.substring(1);
+            Word w = new Word(".", DOT.toString());
+            tokens.add(new Token(w));
+        } else if (lastChar == '.') {
+            name = name.substring(0, name.length() - 1);
+            dotAtLastChar = true;
+        }
+
+        Word result = wordFinder.findWord(name);
+        Token token = new Token(result);
+        tokens.add(token);
+
+        if (dotAtLastChar) {
+            Word w = new Word(".", DOT.toString());
+            tokens.add(new Token(w));
+        }
+
     }
 
 }
