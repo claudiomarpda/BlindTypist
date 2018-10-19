@@ -1,14 +1,16 @@
 package com.blind.typist.lexical;
 
-import com.blind.typist.dictionary.WordClassification;
+import com.blind.typist.dictionary.Classification;
+import com.blind.typist.dictionary.Word;
 import com.blind.typist.dictionary.WordFinder;
+import com.blind.typist.syntactic.SyntacticAnalyzer;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.blind.typist.dictionary.WordClassification.DOT;
-import static com.blind.typist.dictionary.WordClassification.UNDEFINED;
+import static com.blind.typist.dictionary.Classification.DOT;
+import static com.blind.typist.dictionary.Classification.UNDEFINED;
 
 public class LexicalAnalyzer implements LexicalAnalysis {
 
@@ -18,18 +20,20 @@ public class LexicalAnalyzer implements LexicalAnalysis {
     public LexicalAnalyzer(WordFinder wf) {
         this.wordFinder = wf;
         tokens = new ArrayList<>();
-
     }
 
     @Override
     public void analyze(List<String> words) {
+        System.out.println("----------------");
+        System.out.println("\nLexical analysis\n");
+
         List<String> results = new ArrayList<>();
 
         words.forEach(c -> {
             if (!c.equals(".")) {
                 try {
-                    String result = wordFinder.findClass(c);
-                    Token token = new Token(c, classify(result));
+                    Word result = wordFinder.findWord(c);
+                    Token token = new Token(result);
                     tokens.add(token);
 
                     System.out.println(token);
@@ -38,15 +42,18 @@ public class LexicalAnalyzer implements LexicalAnalysis {
                     results.add("Invalid word '" + c + "'");
                 }
             } else {
-                tokens.add(new Token(".", DOT));
+                Word w = new Word(".", DOT.toString(), "", "");
+                tokens.add(new Token(w));
             }
         });
         results.forEach(System.out::println);
         results.clear();
+
+        new SyntacticAnalyzer(tokens).analyze();
     }
 
-    private WordClassification classify(String classification) {
-        for (WordClassification w : WordClassification.values()) {
+    private Classification classify(String classification) {
+        for (Classification w : Classification.values()) {
             if (w.toString().equals(classification)) {
                 return w;
             }

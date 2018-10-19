@@ -1,38 +1,27 @@
 package com.blind.typist.lexical;
 
-import com.blind.typist.dictionary.WordClassification;
+import com.blind.typist.dictionary.Word;
 
 public class Token {
 
-    private String word;
-    private WordClassification classification;
+    private Word word;
 
-    public Token(String word, WordClassification classification) {
+    public Token(Word word) {
         this.word = word;
-        this.classification = classification;
     }
 
-    public String getWord() {
+    public Word getWord() {
         return word;
     }
 
-    public void setWord(String word) {
+    public void setWord(Word word) {
         this.word = word;
-    }
-
-    public WordClassification getClassification() {
-        return classification;
-    }
-
-    public void setClassification(WordClassification classification) {
-        this.classification = classification;
     }
 
     @Override
     public String toString() {
         return "Token{" +
-                "word='" + word + '\'' +
-                ", classification=" + classification +
+                "word=" + word +
                 '}';
     }
 }

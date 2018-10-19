@@ -4,6 +4,6 @@ import java.io.IOException;
 
 public interface WordFinder {
 
-    String findClass(String word) throws RuntimeException, IOException;
+    Word findWord(String word) throws RuntimeException, IOException;
 
 }

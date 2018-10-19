@@ -1,6 +1,6 @@
 package com.blind.typist.dictionary;
 
-public enum WordClassification {
+public enum Classification {
 
     ART_D("art. def."),
     SUBS("subst."),
@@ -17,7 +17,7 @@ public enum WordClassification {
 
     private String name;
 
-    WordClassification(String s) {
+    Classification(String s) {
         name = s;
     }
 
@@ -25,4 +25,5 @@ public enum WordClassification {
     public String toString() {
         return name;
     }
+
 }

@@ -36,7 +36,7 @@ public class RemoteWordFinder implements WordFinder {
      * The pattern to be handled is:
      * <abbr title="Substantivo Feminino">f.</abbr>
      */
-    public String findClass(String word) throws IOException {
+    private String findClass(String word) throws IOException {
         String page = readPage(word);
         int patternStart = page.indexOf(LINE_START);
 
@@ -58,4 +58,8 @@ public class RemoteWordFinder implements WordFinder {
         return page.substring(classStart, classEnd).toLowerCase();
     }
 
+    @Override
+    public Word findWord(String word) throws RuntimeException, IOException {
+        return new Word(word, findClass(word), "", "");
+    }
 }
