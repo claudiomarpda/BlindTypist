@@ -1,6 +1,7 @@
 package com.blind.typist.syntactic;
 
 import com.blind.typist.dictionary.Classification;
+import com.blind.typist.dictionary.Word;
 import com.blind.typist.lexical.Token;
 
 import java.util.ArrayList;
@@ -24,12 +25,13 @@ public class SyntacticAnalyzer implements SyntacticAnalysis {
 
     @Override
     public void analyze() {
-        System.out.println("\nSyntactic analysis\n");
+        System.out.println("\nSyntactic analysis start\n");
 
         checkTexto();
         result.forEach(System.out::println);
 
         clear();
+        System.out.println("\nSyntactic analysis end\n");
     }
 
     private void clear() {
@@ -58,13 +60,6 @@ public class SyntacticAnalyzer implements SyntacticAnalysis {
             result.add("'.' esperado depois de '" + getName() + "'");
         }
 
-        goToNextToken();
-
-        if(token.getWord().getName() != null &&
-                !token.getWord().getName().equals(".") &&
-                token.getWord().getName().equals("")) {
-            checkTexto();
-        }
     }
 
     /**
@@ -80,10 +75,15 @@ public class SyntacticAnalyzer implements SyntacticAnalysis {
      */
     private void checkSintagmaNominal() {
         if (artigoMatches()) {
+            Word artigo = token.getWord();
             goToNextToken();
 
             if (!substantivoMatches()) {
                 result.add("Substantivo esperado em '" + getName() + "'");
+            } else {
+                Word substantivo = token.getWord();
+                checkGender(artigo, substantivo);
+                checkSingularPlural(artigo, substantivo);
             }
         } else if (!substantivoMatches()) {
             result.add("Substantivo esperado em '" + getName() + "'");
@@ -130,6 +130,26 @@ public class SyntacticAnalyzer implements SyntacticAnalysis {
 
     private String getName() {
         return token.getWord().getName();
+    }
+
+    private void checkGender(Word expected, Word current) {
+        String e = expected.getGender();
+        String c = current.getGender();
+        if (!e.equals(c)) {
+            result.add("Incompatibilidade."+
+                    "\nEsperado " + e + " por " + expected.getName() +
+                    "\nRecebido " + c + " de " + current.getName());
+        }
+    }
+
+    private void checkSingularPlural(Word expected, Word current) {
+        String e = expected.getSingularPlural();
+        String c = current.getSingularPlural();
+        if (!e.equals(c)) {
+            result.add("Incompatibilidade."+
+                    "\nEsperado " + e + " por " + expected.getName() +
+                    "\nRecebido " + c + " de " + current.getName());
+        }
     }
 
 }
