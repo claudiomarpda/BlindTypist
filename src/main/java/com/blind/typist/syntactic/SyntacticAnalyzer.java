@@ -57,6 +57,14 @@ public class SyntacticAnalyzer implements SyntacticAnalysis {
         if (!getName().equals(".")) {
             result.add("'.' esperado depois de '" + getName() + "'");
         }
+
+        goToNextToken();
+
+        if(token.getWord().getName() != null &&
+                !token.getWord().getName().equals(".") &&
+                token.getWord().getName().equals("")) {
+            checkTexto();
+        }
     }
 
     /**
@@ -123,5 +131,5 @@ public class SyntacticAnalyzer implements SyntacticAnalysis {
     private String getName() {
         return token.getWord().getName();
     }
-    
+
 }

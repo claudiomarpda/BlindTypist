@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class FileUtil {
 
@@ -33,8 +35,8 @@ public class FileUtil {
         return words;
     }
 
-    public static List<Word> readAll() throws IOException {
-        List<Word> words = new ArrayList<>();
+    public static Set<Word> readAll() throws IOException {
+        Set<Word> words = new HashSet<>();
 
         words.addAll(read("src/main/resources/artigos.csv"));
         words.addAll(read("src/main/resources/substantivos.csv"));

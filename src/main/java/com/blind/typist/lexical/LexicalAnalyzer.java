@@ -1,6 +1,5 @@
 package com.blind.typist.lexical;
 
-import com.blind.typist.dictionary.Classification;
 import com.blind.typist.dictionary.Word;
 import com.blind.typist.dictionary.WordFinder;
 import com.blind.typist.syntactic.SyntacticAnalyzer;
@@ -10,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.blind.typist.dictionary.Classification.DOT;
-import static com.blind.typist.dictionary.Classification.UNDEFINED;
 
 public class LexicalAnalyzer implements LexicalAnalysis {
 
@@ -39,7 +37,7 @@ public class LexicalAnalyzer implements LexicalAnalysis {
                     System.out.println(token);
 
                 } catch (RuntimeException | IOException e) {
-                    results.add("Invalid word '" + c + "'");
+                    results.add(e.getMessage());
                 }
             } else {
                 Word w = new Word(".", DOT.toString(), "", "");
@@ -52,12 +50,4 @@ public class LexicalAnalyzer implements LexicalAnalysis {
         new SyntacticAnalyzer(tokens).analyze();
     }
 
-    private Classification classify(String classification) {
-        for (Classification w : Classification.values()) {
-            if (w.toString().equals(classification)) {
-                return w;
-            }
-        }
-        return UNDEFINED;
-    }
 }
