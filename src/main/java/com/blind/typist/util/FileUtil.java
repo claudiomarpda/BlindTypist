@@ -28,8 +28,11 @@ public class FileUtil {
             if(columns.length == 4) {
                 words.add(new Word(columns[0], columns[1], columns[2], columns[3]));
             }
-            else {
+            else if(columns.length == 3) {
                 words.add(new Word(columns[0], columns[1], columns[2]));
+            }
+            else if(columns.length == 2) {
+                words.add(new Word(columns[0], columns[1]));
             }
         }
         return words;
@@ -42,6 +45,7 @@ public class FileUtil {
         words.addAll(read("src/main/resources/substantivos.csv"));
         words.addAll(read("src/main/resources/verbos.csv"));
         words.addAll(read("src/main/resources/adjetivos.csv"));
+        words.addAll(read("src/main/resources/preposicoes.csv"));
 
         return words;
     }

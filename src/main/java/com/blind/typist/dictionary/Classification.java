@@ -3,6 +3,7 @@ package com.blind.typist.dictionary;
 public enum Classification {
 
     ART_D("art. def."),
+    ART_I("art. indef."),
     SUBS("subst."),
     SUBS_MASC("m."),
     SUBS_FEM("f."),

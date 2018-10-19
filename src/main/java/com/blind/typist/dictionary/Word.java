@@ -21,6 +21,13 @@ public class Word {
         this.gender = "";
     }
 
+    public Word(String name, String classification) {
+        this.name = name;
+        this.classification = classification;
+        this.gender = "";
+        this.singularPlural = "";
+    }
+
     public String getName() {
         return name;
     }
