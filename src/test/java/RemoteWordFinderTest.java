@@ -1,9 +1,10 @@
 import com.blind.typist.dictionary.RemoteWordFinder;
+import com.blind.typist.dictionary.Word;
 import org.junit.Test;
 
 import java.io.IOException;
 
-import static com.blind.typist.dictionary.WordClassification.*;
+import static com.blind.typist.dictionary.Classification.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -13,31 +14,31 @@ public class RemoteWordFinderTest {
 
     @Test
     public void go() throws IOException {
-        String s = finder.findClass("nome");
-        assertEquals(s, SUBS_MASC.toString());
+        Word w = finder.findWord("nome");
+        assertEquals(w.getClassification(), SUBS_MASC.toString());
 
-        s = finder.findClass("casa");
-        assertEquals(s, SUBS_FEM.toString());
+        w = finder.findWord("casa");
+        assertEquals(w.getClassification(), SUBS_FEM.toString());
 
-        s = finder.findClass("lar");
-        assertEquals(s, SUBS_MASC.toString());
+        w = finder.findWord("lar");
+        assertEquals(w.getClassification(), SUBS_MASC.toString());
 
-        s = finder.findClass("carro");
-        assertEquals(s, SUBS_MASC.toString());
+        w = finder.findWord("carro");
+        assertEquals(w.getClassification(), SUBS_MASC.toString());
 
-        s = finder.findClass("andar");
-        assertTrue(s.startsWith(VERB.toString()));
+        w = finder.findWord("andar");
+        assertTrue(w.getClassification().startsWith(VERB.toString()));
 
-        s = finder.findClass("bela");
-        assertEquals(s, SUBS_FEM.toString());
+        w = finder.findWord("bela");
+        assertEquals(w.getClassification(), SUBS_FEM.toString());
 
-        s = finder.findClass("os");
-        assertEquals(s, ART_D.toString());
+        w = finder.findWord("os");
+        assertEquals(w.getClassification(), ART_D.toString());
 
-        s = finder.findClass("forte");
-        assertEquals(s, ADJ.toString());
+        w = finder.findWord("forte");
+        assertEquals(w.getClassification(), ADJ.toString());
 
-        s = finder.findClass("entre");
-        assertEquals(s, PREP.toString());
+        w = finder.findWord("entre");
+        assertEquals(w.getClassification(), PREP.toString());
     }
 }
