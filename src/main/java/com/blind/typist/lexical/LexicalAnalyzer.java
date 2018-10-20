@@ -4,6 +4,7 @@ import com.blind.typist.dictionary.Word;
 import com.blind.typist.dictionary.WordFinder;
 import com.blind.typist.syntactic.SyntacticAnalyzer;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,16 +36,21 @@ public class LexicalAnalyzer implements LexicalAnalysis {
                 results.add(e.getMessage());
             }
         });
+
+        if (!results.isEmpty()) {
+            Toolkit.getDefaultToolkit().beep();
+        }
+
         results.forEach(System.out::println);
-        results.clear();
 
         System.out.println("\nLexical analysis end\n");
 
         new SyntacticAnalyzer(tokens).analyze();
+        tokens.clear();
     }
 
     private void checkWord(String name) throws IOException {
-        if(name.equals(".")) {
+        if (name.equals(".")) {
             Word w = new Word(".", DOT.toString());
             tokens.add(new Token(w));
             return;

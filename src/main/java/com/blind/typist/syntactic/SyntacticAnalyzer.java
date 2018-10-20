@@ -4,6 +4,7 @@ import com.blind.typist.dictionary.Classification;
 import com.blind.typist.dictionary.Word;
 import com.blind.typist.lexical.Token;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,13 +15,13 @@ public class SyntacticAnalyzer implements SyntacticAnalysis {
     private List<Token> tokens;
     private Token token;
     private int current;
-    private List<String> result;
+    private List<String> results;
 
     public SyntacticAnalyzer(List<Token> tokens) {
         this.tokens = tokens;
         token = tokens.get(0);
         current = 0;
-        result = new ArrayList<>();
+        results = new ArrayList<>();
     }
 
     @Override
@@ -30,7 +31,11 @@ public class SyntacticAnalyzer implements SyntacticAnalysis {
         checkAgreement();
 
         checkTexto();
-        result.forEach(System.out::println);
+
+        if(!results.isEmpty()) {
+            results.forEach(System.out::println);
+            Toolkit.getDefaultToolkit().beep();
+        }
 
         System.out.println("\nSyntactic analysis end\n");
     }
@@ -48,7 +53,7 @@ public class SyntacticAnalyzer implements SyntacticAnalysis {
         checkSentence();
 
         if (!getName().equals(".")) {
-            result.add("'.' esperado depois de '" + getName() + "'");
+            results.add("'.' esperado depois de '" + getName() + "'");
         }
 
     }
@@ -68,10 +73,10 @@ public class SyntacticAnalyzer implements SyntacticAnalysis {
         if (artigoMatches()) {
             goToNextToken();
             if (!substantivoMatches()) {
-                result.add("Substantivo esperado depois de '" + getName() + "'");
+                results.add("Substantivo esperado depois de '" + getName() + "'");
             }
         } else if (!substantivoMatches()) {
-            result.add("Substantivo esperado depois de '" + getName() + "'");
+            results.add("Substantivo esperado depois de '" + getName() + "'");
         }
 
         goToNextToken();
@@ -89,7 +94,7 @@ public class SyntacticAnalyzer implements SyntacticAnalysis {
             }
 
         } else {
-            result.add("Verbo esperado em '" + getName() + "'");
+            results.add("Verbo esperado em '" + getName() + "'");
             goToNextToken();
         }
     }
@@ -125,7 +130,7 @@ public class SyntacticAnalyzer implements SyntacticAnalysis {
 
             if (!current.getGender().equals("") && !next.getGender().equals("")) {
                 if (!current.getGender().equals(next.getGender())) {
-                    result.add("Incompatibilidade." +
+                    results.add("Incompatibilidade." +
                             "\nEsperado " + current.getGender() + " por '" + current.getName() + "'" +
                             "\nRecebido " + next.getGender() + " de '" + next.getName() + "'");
                 }
@@ -133,7 +138,7 @@ public class SyntacticAnalyzer implements SyntacticAnalysis {
 
             if (!current.getSingularPlural().equals("") && !next.getSingularPlural().equals("")) {
                 if (!current.getSingularPlural().equals(next.getSingularPlural())) {
-                    result.add("Incompatibilidade." +
+                    results.add("Incompatibilidade." +
                             "\nEsperado " + current.getSingularPlural() + " por '" + current.getName() + "'" +
                             "\nRecebido " + next.getSingularPlural() + " de '" + next.getName() + "'");
                 }
